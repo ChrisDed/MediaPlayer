@@ -20,6 +20,8 @@ namespace MediaPlayer
     /// </summary>
     public partial class MainWindow : Window
     {
+        private bool _positionSliderDragging;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -43,6 +45,35 @@ namespace MediaPlayer
         private void VolumeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             MediaEle.Volume = VolumeSlider.Value;
+        }
+
+        private void SpeedSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            MediaEle.SpeedRatio = SpeedSlider.Value;
+        }
+
+        private void PositionSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (_positionSliderDragging)
+                MediaEle.Position = TimeSpan.FromMilliseconds(PositionSlider.Value);
+        }
+
+        private void MediaEle_MediaOpened(object sender, RoutedEventArgs e)
+        {
+            PositionSlider.Maximum = MediaEle.NaturalDuration.TimeSpan.TotalMilliseconds;
+            SpeedSlider.Value = 1;
+        }
+
+        private void PositionSlider_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            _positionSliderDragging = false;
+            MediaEle.Play();
+        }
+
+        private void PositionSlider_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            _positionSliderDragging = true;
+            MediaEle.Stop();
         }
     }
 }

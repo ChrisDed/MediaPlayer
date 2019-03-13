@@ -7,11 +7,14 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <MediaElement x:Name="MediaEle" LoadedBehavior="Manual" HorizontalAlignment="Left" Height="256" Margin="10,10,0,0" VerticalAlignment="Top" Width="736" RenderTransformOrigin="-1.576,-1.022" Source="C:\Users\chris\Music\mick.mp3"/>
+        <MediaElement x:Name="MediaEle" LoadedBehavior="Manual" HorizontalAlignment="Left" Height="256" Margin="10,10,0,0" VerticalAlignment="Top" Width="736" RenderTransformOrigin="-1.576,-1.022" Source="C:\Users\chris\Music\mick.mp3" MediaOpened="MediaEle_MediaOpened"/>
         <Button x:Name="PauseBtn" Content="Pause" HorizontalAlignment="Left" Margin="707,386,0,0" VerticalAlignment="Top" Width="75" Click="PauseBtn_Click"/>
         <Button x:Name="StopBtn" Content="Stop" HorizontalAlignment="Left" Margin="627,386,0,0" VerticalAlignment="Top" Width="75" Click="StopBtn_Click"/>
         <Button x:Name="StartBtn" Content="Start" HorizontalAlignment="Left" Margin="547,386,0,0" VerticalAlignment="Top" Width="75" Click="StartBtn_Click"/>
         <Slider x:Name="VolumeSlider" Orientation="Vertical" HorizontalAlignment="Left" Margin="761,22,0,0" VerticalAlignment="Top" Width="21" Maximum="1" Value="0.5" ValueChanged="VolumeSlider_ValueChanged" Height="244"/>
+        <Slider x:Name="PositionSlider" HorizontalAlignment="Left" Margin="10,289,0,0" VerticalAlignment="Top" Width="357" ValueChanged="PositionSlider_ValueChanged" PreviewMouseUp="PositionSlider_PreviewMouseUp" PreviewMouseDown="PositionSlider_PreviewMouseDown"/>
+        <Slider x:Name="SpeedSlider" HorizontalAlignment="Left" Margin="10,331,0,0" VerticalAlignment="Top" Width="357" Minimum="0" Maximum="10" Value="1" ValueChanged="SpeedSlider_ValueChanged"/>
+        <Slider x:Name="BalanceSlider" HorizontalAlignment="Left" Margin="10,374,0,0" VerticalAlignment="Top" Width="357" Minimum="-1" Maximum="1" Value="0"/>
 
     </Grid>
 </Window>
