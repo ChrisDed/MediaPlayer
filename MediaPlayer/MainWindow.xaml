@@ -1,0 +1,16 @@
+﻿<Window x:Class="MediaPlayer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MediaPlayer"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <MediaElement x:Name="Me" HorizontalAlignment="Left" Height="333" Margin="10,10,0,0" VerticalAlignment="Top" Width="772" RenderTransformOrigin="-1.576,-1.022" Source="C:\Users\chris\Music\mick.mp3"/>
+        <Button x:Name="PauseBtn" Content="Pause" HorizontalAlignment="Left" Margin="707,386,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="StopBtn" Content="Stop" HorizontalAlignment="Left" Margin="592,386,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="PlayBtn" Content="Play" HorizontalAlignment="Left" Margin="475,386,0,0" VerticalAlignment="Top" Width="75"/>
+
+    </Grid>
+</Window>
