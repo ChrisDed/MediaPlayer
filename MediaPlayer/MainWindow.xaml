@@ -7,10 +7,11 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <MediaElement x:Name="Me" HorizontalAlignment="Left" Height="333" Margin="10,10,0,0" VerticalAlignment="Top" Width="772" RenderTransformOrigin="-1.576,-1.022" Source="C:\Users\chris\Music\mick.mp3"/>
-        <Button x:Name="PauseBtn" Content="Pause" HorizontalAlignment="Left" Margin="707,386,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button x:Name="StopBtn" Content="Stop" HorizontalAlignment="Left" Margin="592,386,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button x:Name="PlayBtn" Content="Play" HorizontalAlignment="Left" Margin="475,386,0,0" VerticalAlignment="Top" Width="75"/>
+        <MediaElement x:Name="MediaEle" LoadedBehavior="Manual" HorizontalAlignment="Left" Height="256" Margin="10,10,0,0" VerticalAlignment="Top" Width="736" RenderTransformOrigin="-1.576,-1.022" Source="C:\Users\chris\Music\mick.mp3"/>
+        <Button x:Name="PauseBtn" Content="Pause" HorizontalAlignment="Left" Margin="707,386,0,0" VerticalAlignment="Top" Width="75" Click="PauseBtn_Click"/>
+        <Button x:Name="StopBtn" Content="Stop" HorizontalAlignment="Left" Margin="627,386,0,0" VerticalAlignment="Top" Width="75" Click="StopBtn_Click"/>
+        <Button x:Name="StartBtn" Content="Start" HorizontalAlignment="Left" Margin="547,386,0,0" VerticalAlignment="Top" Width="75" Click="StartBtn_Click"/>
+        <Slider x:Name="VolumeSlider" Orientation="Vertical" HorizontalAlignment="Left" Margin="761,22,0,0" VerticalAlignment="Top" Width="21" Maximum="1" Value="0.5" ValueChanged="VolumeSlider_ValueChanged" Height="244"/>
 
     </Grid>
 </Window>

@@ -24,5 +24,25 @@ namespace MediaPlayer
         {
             InitializeComponent();
         }
+
+        private void StartBtn_Click(object sender, RoutedEventArgs e)
+        {
+            MediaEle.Play();
+        }
+
+        private void StopBtn_Click(object sender, RoutedEventArgs e)
+        {
+            MediaEle.Stop();
+        }
+
+        private void PauseBtn_Click(object sender, RoutedEventArgs e)
+        {
+            MediaEle.Pause();
+        }
+
+        private void VolumeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            MediaEle.Volume = VolumeSlider.Value;
+        }
     }
 }
