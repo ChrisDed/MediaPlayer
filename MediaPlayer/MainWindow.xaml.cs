@@ -29,7 +29,6 @@ namespace MediaPlayer
             InitializeComponent();
             _timer.Interval = new TimeSpan(0, 0, 0, 0, 100);
             _timer.Tick += new EventHandler(Timer_Tick);
-            _timer.Start();
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -40,7 +39,12 @@ namespace MediaPlayer
 
         private void StartBtn_Click(object sender, RoutedEventArgs e)
         {
+            // assign defaults (from slider positions) when a track starts playing
+            MediaEle.SpeedRatio = SpeedSlider.Value;
+            MediaEle.Volume = VolumeSlider.Value;
+            MediaEle.Balance = BalanceSlider.Value;
             MediaEle.Play();
+            _timer.Start();
         }
 
         private void StopBtn_Click(object sender, RoutedEventArgs e)
