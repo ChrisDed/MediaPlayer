@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace MediaPlayer
 {
@@ -20,11 +21,21 @@ namespace MediaPlayer
     /// </summary>
     public partial class MainWindow : Window
     {
+        private DispatcherTimer _timer = new DispatcherTimer();
         private bool _positionSliderDragging;
 
         public MainWindow()
         {
             InitializeComponent();
+            _timer.Interval = new TimeSpan(0, 0, 0, 0, 100);
+            _timer.Tick += new EventHandler(Timer_Tick);
+            _timer.Start();
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            if (!_positionSliderDragging)
+                PositionSlider.Value = MediaEle.Position.TotalMilliseconds;
         }
 
         private void StartBtn_Click(object sender, RoutedEventArgs e)
