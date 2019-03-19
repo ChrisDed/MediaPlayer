@@ -229,7 +229,8 @@ namespace MediaPlayer
 
         private void Media_MediaFailed(object sender, ExceptionRoutedEventArgs e)
         {
-
+            // this fires if the media source can't be found or can't be played
+            MessageBox.Show("Unable to play " + _trackPath + " [" + e.ErrorException.Message + "]");
         }
     }
 }
