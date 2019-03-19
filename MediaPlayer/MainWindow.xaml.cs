@@ -97,7 +97,7 @@ namespace MediaPlayer
             MediaEle.Stop();
         }
 
-        // Menu handlers
+        // File processing
 
         private void OpenFile_Click(object sender, RoutedEventArgs e)
         {
@@ -148,6 +148,8 @@ namespace MediaPlayer
         {
             this.Close();
         }
+
+        // Media handlers
 
         private void PlayTrack()
         {
@@ -203,6 +205,31 @@ namespace MediaPlayer
             MediaEle.Balance = BalanceSlider.Value;
             MediaEle.Play();
             _timer.Start();
+        }
+
+        // Media event listeners
+
+        private void Media_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            int nextTrackIndex = -1;
+            int numberOfTracks = -1;
+            MediaEle.Stop();
+            numberOfTracks = PlaylistBox.Items.Count;
+            if (numberOfTracks > 0)
+            {
+                nextTrackIndex = PlaylistBox.SelectedIndex + 1;
+                if (nextTrackIndex >= numberOfTracks)
+                {
+                    nextTrackIndex = 0;
+                }
+                PlaylistBox.SelectedIndex = nextTrackIndex;
+                PlayPlaylist();
+            }
+        }
+
+        private void Media_MediaFailed(object sender, ExceptionRoutedEventArgs e)
+        {
+
         }
     }
 }
