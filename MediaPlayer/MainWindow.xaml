@@ -10,7 +10,7 @@
         <Menu Height="19" VerticalAlignment="Top">
             <MenuItem Header="_File">
                 <MenuItem Header="_Open File..." Click="OpenFile_Click"/>
-                <MenuItem Header="_Open Folder..." Click="OpenFile_Click"/>
+                <MenuItem Header="_Open Folder..." Click="OpenFolder_Click"/>
                 <Separator></Separator>
                 <MenuItem Header="_Exit" Click="CloseApp_Click"/>
             </MenuItem>
