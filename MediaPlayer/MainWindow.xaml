@@ -5,12 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MediaPlayer"
         mc:Ignorable="d"
-        Title="Media Player" Height="450" Width="800">
+        Title="Media Player" Height="450" Width="800" WindowStyle="SingleBorderWindow"
+            Drop="Files_Drop" AllowDrop="True" BorderThickness="1" Foreground="YellowGreen">
     <Grid Background="GhostWhite" Margin="0,0,0,1">
         <Menu Height="19" VerticalAlignment="Top">
             <MenuItem Header="_File">
-                <MenuItem Header="_Open File..." Click="OpenFile_Click"/>
-                <MenuItem Header="_Open Folder..." Click="OpenFolder_Click"/>
+                <MenuItem Header="Open File..." Click="OpenFile_Click"/>
+                <MenuItem Header="Open Folder..." Click="OpenFolder_Click"/>
+                <MenuItem Header="Open Playlist..." Click="OpenPlaylist_Click"/>
+                <MenuItem Header="Save Playlist..." Click="SavePlaylist_Click"/>
                 <Separator></Separator>
                 <MenuItem Header="_Exit" Click="CloseApp_Click"/>
             </MenuItem>

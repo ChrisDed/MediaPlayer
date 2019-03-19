@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -14,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using System.Xml;
 
 namespace MediaPlayer
 {
@@ -25,6 +27,7 @@ namespace MediaPlayer
         private DispatcherTimer _timer = new DispatcherTimer();
         private bool _positionSliderDragging;
         private string _trackPath;
+        private string datafile = "default.playlist";
 
         public MainWindow()
         {
@@ -144,6 +147,85 @@ namespace MediaPlayer
             }
         }
 
+        private void OpenPlaylist_Click(object sender, RoutedEventArgs e)
+        {
+            XmlDocument xdoc = new XmlDocument();
+            XmlNodeList xmlNodes;
+            XmlNode pathNode;
+            string track;
+            bool xmlLoaded = true;
+            try
+            {
+                xdoc.Load(datafile);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error loading XML data");
+                xmlLoaded = false;
+            }
+            if (xmlLoaded)
+            {
+                PlaylistBox.Items.Clear();
+                PlaylistBox.Visibility = Visibility.Visible;
+                xmlNodes = xdoc.SelectNodes("Playlist/track");
+                foreach (XmlNode node in xmlNodes)
+                {
+                    pathNode = node.SelectSingleNode("path");
+                    track = pathNode.InnerText;
+                    PlaylistBox.Items.Add(track);
+                }
+                PlaylistBox.SelectedIndex = 0;
+            }
+        }
+
+        private void SavePlaylist_Click(object sender, RoutedEventArgs e)
+        {
+            XmlWriterSettings settings = new XmlWriterSettings();
+            XmlWriter xmlwr;
+
+            settings.Indent = true;
+            settings.OmitXmlDeclaration = true;
+            settings.NewLineOnAttributes = true;
+            xmlwr = XmlWriter.Create(datafile, settings);
+            ArrayList albumData = PlaylistTracks();
+
+            if (albumData.Count == 0)
+            {
+                MessageBox.Show("No tracks to save!", "Error");
+            }
+            else
+            {
+                xmlwr.WriteStartElement("Playlist");
+                foreach (string s in albumData)
+                {
+                    xmlwr.WriteStartElement("track");
+                    xmlwr.WriteElementString("path", s);
+                    xmlwr.WriteEndElement();
+                }
+                xmlwr.WriteEndElement();
+                xmlwr.Close();
+            }
+        }
+
+        private void Files_Drop(object sender, DragEventArgs e)
+        {
+            string[] trackpaths = e.Data.GetData(DataFormats.FileDrop) as string[];
+            foreach (string s in trackpaths)
+            {
+                if (IsValidTrack(s))
+                {
+                    PlaylistBox.Items.Add(s);
+                }
+            }
+            if (PlaylistBox.Items.Count > 0)
+            {
+                PlaylistBox.Visibility = Visibility.Visible;
+                PlaylistBox.SelectedIndex = 0;
+                _trackPath = trackpaths[0];
+                TrackLabel.Content = _trackPath;
+            }
+        }
+
         private void CloseApp_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -197,16 +279,6 @@ namespace MediaPlayer
             }
         }
 
-        private void SetSliderDefaults()
-        {
-            // assign defaults (from slider positions) when a track starts playing
-            MediaEle.SpeedRatio = SpeedSlider.Value;
-            MediaEle.Volume = VolumeSlider.Value;
-            MediaEle.Balance = BalanceSlider.Value;
-            MediaEle.Play();
-            _timer.Start();
-        }
-
         // Media event listeners
 
         private void Media_MediaEnded(object sender, RoutedEventArgs e)
@@ -231,6 +303,40 @@ namespace MediaPlayer
         {
             // this fires if the media source can't be found or can't be played
             MessageBox.Show("Unable to play " + _trackPath + " [" + e.ErrorException.Message + "]");
+        }
+
+        // Utility methods
+
+        private void SetSliderDefaults()
+        {
+            // assign defaults (from slider positions) when a track starts playing
+            MediaEle.SpeedRatio = SpeedSlider.Value;
+            MediaEle.Volume = VolumeSlider.Value;
+            MediaEle.Balance = BalanceSlider.Value;
+            MediaEle.Play();
+            _timer.Start();
+        }
+
+        private ArrayList PlaylistTracks()
+        {
+            int i = 0;
+            string trackname = "";
+            int playListSize = PlaylistBox.Items.Count;
+            ArrayList tracks = new ArrayList();
+            if (playListSize > 0)
+            {
+                for (i = 0; i < playListSize; i++)
+                {
+                    trackname = PlaylistBox.Items[i].ToString();
+                    tracks.Add(trackname);
+                }
+            }
+            return tracks;
+        }
+
+        private bool IsValidTrack(string track)
+        {
+            return track.EndsWith(".mp3");
         }
     }
 }
