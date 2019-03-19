@@ -49,8 +49,10 @@ namespace MediaPlayer
 
         private void StartBtn_Click(object sender, RoutedEventArgs e)
         {
-            // assign defaults (from slider positions) when a track starts playing
-            SetSliderDefaults();
+            if (PlaylistBox.Items.Count > 0)
+                PlayPlaylist();
+            else
+                PlayTrack();
         }
 
         private void StopBtn_Click(object sender, RoutedEventArgs e)
@@ -119,25 +121,32 @@ namespace MediaPlayer
 
         private void OpenFolder_Click(object sender, RoutedEventArgs e)
         {
-        //    String folderpath = "";
-        //    string[] files;
-        //    // Note: You must browse to add a reference to System.Windows.Forms
-        //    // in Solution Explorer in order to have access to the FolderBrowserDialog
-        //    System.Windows.Forms.FolderBrowserDialog fd = new System.Windows.Forms.FolderBrowserDialog();
-        //    System.Windows.Forms.DialogResult result = fd.ShowDialog();
-        //    if (result == System.Windows.Forms.DialogResult.OK)
-        //    {
-        //        folderpath = fd.SelectedPath;
-        //    }
-        //    if (folderpath != "")
-        //    {
-
-        //    }
+            String folderpath = "";
+            string[] files;
+            // Note: Must add a reference to System.Windows.Forms
+            // in Solution Explorer in order to have access to FolderBrowserDialog
+            System.Windows.Forms.FolderBrowserDialog fd = new System.Windows.Forms.FolderBrowserDialog();
+            System.Windows.Forms.DialogResult result = fd.ShowDialog();
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                folderpath = fd.SelectedPath;
+            }
+            if (folderpath != "")
+            {
+                PlaylistBox.Items.Clear();
+                PlaylistBox.Visibility = Visibility.Visible;
+                files = Directory.GetFiles(folderpath, "*.mp3");
+                foreach (string file in files)
+                {
+                    PlaylistBox.Items.Add(file);
+                }
+                PlaylistBox.SelectedIndex = 0;
+            }
         }
 
         private void CloseApp_Click(object sender, RoutedEventArgs e)
         {
-
+            this.Close();
         }
 
         private void PlayTrack()
@@ -167,6 +176,21 @@ namespace MediaPlayer
                     MediaEle.Source = src;
                     // assign the defaults (from slider positions) when a track starts playing
                     SetSliderDefaults();
+                }
+            }
+        }
+
+        private void PlayPlaylist()
+        {
+            int selectedItemIndex = -1;
+            if (PlaylistBox.Items.Count > 0)
+            {
+                selectedItemIndex = PlaylistBox.SelectedIndex;
+                if (selectedItemIndex > -1)
+                {
+                    _trackPath = PlaylistBox.Items[selectedItemIndex].ToString();
+                    TrackLabel.Content = _trackPath;
+                    PlayTrack();
                 }
             }
         }
