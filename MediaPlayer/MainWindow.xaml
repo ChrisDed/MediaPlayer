@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MediaPlayer"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Media Player" Height="450" Width="800">
     <Grid Background="GhostWhite" Margin="0,0,0,1">
         <Menu Height="19" VerticalAlignment="Top">
             <MenuItem Header="_File">
@@ -15,7 +15,7 @@
                 <MenuItem Header="_Exit" Click="CloseApp_Click"/>
             </MenuItem>
         </Menu>
-        <MediaElement x:Name="MediaEle" LoadedBehavior="Manual" HorizontalAlignment="Left" Height="243" Margin="10,33,0,0" VerticalAlignment="Top" Width="692" RenderTransformOrigin="-1.576,-1.022" Source="" MediaOpened="MediaEle_MediaOpened"/>
+        <MediaElement x:Name="MediaEle" LoadedBehavior="Manual" HorizontalAlignment="Left" Height="243" Margin="10,33,0,0" VerticalAlignment="Top" Width="692" RenderTransformOrigin="-1.576,-1.022" Source="" MediaOpened="MediaEle_MediaOpened" MediaEnded="Media_MediaEnded" MediaFailed="Media_MediaFailed"/>
         <Button x:Name="PauseBtn" Content="Pause" HorizontalAlignment="Left" Margin="707,386,0,0" VerticalAlignment="Top" Width="75" Click="PauseBtn_Click"/>
         <Button x:Name="StopBtn" Content="Stop" HorizontalAlignment="Left" Margin="627,386,0,0" VerticalAlignment="Top" Width="75" Click="StopBtn_Click"/>
         <Button x:Name="StartBtn" Content="Start" HorizontalAlignment="Left" Margin="547,386,0,0" VerticalAlignment="Top" Width="75" Click="StartBtn_Click"/>
