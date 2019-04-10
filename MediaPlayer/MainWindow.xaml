@@ -6,32 +6,39 @@
         xmlns:local="clr-namespace:MediaPlayer"
         mc:Ignorable="d"
         Title="Media Player" Height="450" Width="800" WindowStyle="SingleBorderWindow"
-            Drop="Files_Drop" AllowDrop="True" BorderThickness="1" Foreground="YellowGreen">
-    <Grid Background="GhostWhite" Margin="0,0,0,1">
-        <Menu Height="19" VerticalAlignment="Top">
-            <MenuItem Header="_File">
-                <MenuItem Header="Open File..." Click="OpenFile_Click"/>
-                <MenuItem Header="Open Folder..." Click="OpenFolder_Click"/>
-                <MenuItem Header="Open Playlist..." Click="OpenPlaylist_Click"/>
-                <MenuItem Header="Save Playlist..." Click="SavePlaylist_Click"/>
+            Drop="Files_Drop" AllowDrop="True" BorderThickness="0" Foreground="YellowGreen" Background="#FF686868">
+    <Grid Margin="0,0,0,1">
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FF5B5B5B" Offset="0"/>
+                <GradientStop Color="#FF5B5B5B" Offset="1"/>
+                <GradientStop Color="#FF363636" Offset="0.486"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="265*"/>
+            <RowDefinition Height="151*"/>
+        </Grid.RowDefinitions>
+        <Menu Height="19" VerticalAlignment="Top" Background="#FF5B5B5B" BorderThickness="0,0,0,1">
+            <MenuItem Header="_File" Foreground="White" Background="#00000000">
+                <MenuItem Header="Open File..." Click="OpenFile_Click" Foreground="Black"/>
+                <MenuItem Header="Open Folder..." Click="OpenFolder_Click" Foreground="Black"/>
+                <MenuItem Header="Open Playlist..." Click="OpenPlaylist_Click" Foreground="Black"/>
+                <MenuItem Header="Save Playlist..." Click="SavePlaylist_Click" Foreground="Black"/>
                 <Separator></Separator>
-                <MenuItem Header="_Exit" Click="CloseApp_Click"/>
+                <MenuItem Header="_Exit" Click="CloseApp_Click" Foreground="Black"/>
             </MenuItem>
         </Menu>
-        <MediaElement x:Name="MediaEle" LoadedBehavior="Manual" HorizontalAlignment="Left" Height="243" Margin="10,33,0,0" VerticalAlignment="Top" Width="692" RenderTransformOrigin="-1.576,-1.022" Source="" MediaOpened="MediaEle_MediaOpened" MediaEnded="Media_MediaEnded" MediaFailed="Media_MediaFailed"/>
-        <Button x:Name="PauseBtn" Content="Pause" HorizontalAlignment="Left" Margin="707,386,0,0" VerticalAlignment="Top" Width="75" Click="PauseBtn_Click"/>
-        <Button x:Name="StopBtn" Content="Stop" HorizontalAlignment="Left" Margin="627,386,0,0" VerticalAlignment="Top" Width="75" Click="StopBtn_Click"/>
-        <Button x:Name="StartBtn" Content="Start" HorizontalAlignment="Left" Margin="547,386,0,0" VerticalAlignment="Top" Width="75" Click="StartBtn_Click"/>
-        <Slider x:Name="VolumeSlider" Orientation="Vertical" HorizontalAlignment="Left" Margin="738,63,0,0" VerticalAlignment="Top" Width="21" Maximum="1" Value="0.5" ValueChanged="VolumeSlider_ValueChanged" Height="213"/>
-        <Slider x:Name="PositionSlider" Margin="83,289,0,0" VerticalAlignment="Top" Width="357" ValueChanged="PositionSlider_ValueChanged" PreviewMouseUp="PositionSlider_PreviewMouseUp" PreviewMouseDown="PositionSlider_PreviewMouseDown" HorizontalAlignment="Left" TickPlacement="BottomRight" TickFrequency="0"/>
-        <Slider x:Name="SpeedSlider" HorizontalAlignment="Left" Margin="83,318,0,0" VerticalAlignment="Top" Width="357" Minimum="0" Maximum="10" Value="1" ValueChanged="SpeedSlider_ValueChanged" TickPlacement="TopLeft"/>
-        <Slider x:Name="BalanceSlider" HorizontalAlignment="Left" Margin="83,357,0,0" VerticalAlignment="Top" Width="357" Minimum="-1" Maximum="1" Value="0"/>
-        <Label Content="Position:" HorizontalAlignment="Left" Margin="10,281,0,0" VerticalAlignment="Top" Width="53" Height="26"/>
-        <ListBox Margin="12,46,59,168" Name="PlaylistBox" Visibility="Hidden"/>
-        <Label Content="Track:" HorizontalAlignment="Left" Margin="12,383,0,0" VerticalAlignment="Top"/>
-        <Label Content="Speed:" HorizontalAlignment="Left" Margin="12,318,0,0" VerticalAlignment="Top"/>
-        <Label Content="Balance:" HorizontalAlignment="Left" Margin="12,349,0,0" VerticalAlignment="Top"/>
-        <Label Name="TrackLabel" Content="No track loaded" HorizontalAlignment="Left" Margin="83,382,0,0" VerticalAlignment="Top"/>
-        <Label Content="Volume" HorizontalAlignment="Left" Margin="720,32,0,0" VerticalAlignment="Top"/>
+        <MediaElement x:Name="MediaEle" LoadedBehavior="Manual" HorizontalAlignment="Left" Height="243" Margin="10,33,0,0" VerticalAlignment="Top" Width="530" RenderTransformOrigin="-1.576,-1.022" Source="" MediaOpened="MediaEle_MediaOpened" MediaEnded="Media_MediaEnded" MediaFailed="Media_MediaFailed" Grid.RowSpan="2"/>
+        <Button x:Name="PauseBtn" Content="Pause" HorizontalAlignment="Left" Margin="707,121,0,0" VerticalAlignment="Top" Width="75" Click="PauseBtn_Click" Grid.Row="1" Height="20"/>
+        <Button x:Name="StopBtn" Content="Stop" HorizontalAlignment="Left" Margin="627,121,0,0" VerticalAlignment="Top" Width="75" Click="StopBtn_Click" Grid.Row="1" Height="20"/>
+        <Button x:Name="StartBtn" Content="Start" HorizontalAlignment="Left" Margin="547,121,0,0" VerticalAlignment="Top" Width="75" Click="StartBtn_Click" Grid.Row="1" Height="20"/>
+        <Slider x:Name="VolumeSlider" Orientation="Horizontal" HorizontalAlignment="Left" Margin="78,95,0,0" VerticalAlignment="Top" Width="362" Maximum="1" Value="0.5" ValueChanged="VolumeSlider_ValueChanged" Height="22" Grid.Row="1"/>
+        <Slider x:Name="PositionSlider" Margin="83,67,0,0" VerticalAlignment="Top" Width="357" ValueChanged="PositionSlider_ValueChanged" PreviewMouseUp="PositionSlider_PreviewMouseUp" PreviewMouseDown="PositionSlider_PreviewMouseDown" HorizontalAlignment="Left" TickPlacement="BottomRight" TickFrequency="0" Height="18" Grid.Row="1"/>
+        <Label Content="Position:" HorizontalAlignment="Left" Margin="12,59,0,0" VerticalAlignment="Top" Width="53" Height="26" Grid.Row="1" Foreground="White"/>
+        <ListBox Margin="12,46,59,17" Name="PlaylistBox" Visibility="Hidden"/>
+        <Label Content="Track:" HorizontalAlignment="Left" Margin="12,119,0,0" VerticalAlignment="Top" Grid.Row="1" Height="26" Width="40" Foreground="White"/>
+        <Label Name="TrackLabel" Content="No track loaded" HorizontalAlignment="Left" Margin="83,117,0,0" VerticalAlignment="Top" Grid.Row="1" Height="26" Width="439" Foreground="White"/>
+        <Label Content="Volume" HorizontalAlignment="Left" Margin="12,91,0,0" VerticalAlignment="Top" Grid.Row="1" Height="26" Width="50" Foreground="White"/>
     </Grid>
 </Window>

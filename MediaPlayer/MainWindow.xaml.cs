@@ -16,6 +16,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using System.Xml;
+using Path = System.IO.Path;
 
 namespace MediaPlayer
 {
@@ -45,7 +46,6 @@ namespace MediaPlayer
         private void MediaEle_MediaOpened(object sender, RoutedEventArgs e)
         {
             PositionSlider.Maximum = MediaEle.NaturalDuration.TimeSpan.TotalMilliseconds;
-            SpeedSlider.Value = 1;
         }
 
         // Button Event Handlers
@@ -73,11 +73,6 @@ namespace MediaPlayer
         private void VolumeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             MediaEle.Volume = VolumeSlider.Value;
-        }
-
-        private void SpeedSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            MediaEle.SpeedRatio = SpeedSlider.Value;
         }
 
         private void PositionSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -147,6 +142,27 @@ namespace MediaPlayer
             }
         }
 
+        private void Files_Drop(object sender, DragEventArgs e)
+        {
+            string[] trackpaths = e.Data.GetData(DataFormats.FileDrop) as string[];
+            foreach (string s in trackpaths)
+            {
+                if (IsValidTrack(s))
+                {
+                    PlaylistBox.Items.Add(s);
+                }
+            }
+            if (PlaylistBox.Items.Count > 0)
+            {
+                PlaylistBox.Visibility = Visibility.Visible;
+                PlaylistBox.SelectedIndex = 0;
+                _trackPath = trackpaths[0];
+                TrackLabel.Content = _trackPath;
+            }
+        }
+
+        // Media Play Triggers
+
         private void OpenPlaylist_Click(object sender, RoutedEventArgs e)
         {
             XmlDocument xdoc = new XmlDocument();
@@ -204,25 +220,6 @@ namespace MediaPlayer
                 }
                 xmlwr.WriteEndElement();
                 xmlwr.Close();
-            }
-        }
-
-        private void Files_Drop(object sender, DragEventArgs e)
-        {
-            string[] trackpaths = e.Data.GetData(DataFormats.FileDrop) as string[];
-            foreach (string s in trackpaths)
-            {
-                if (IsValidTrack(s))
-                {
-                    PlaylistBox.Items.Add(s);
-                }
-            }
-            if (PlaylistBox.Items.Count > 0)
-            {
-                PlaylistBox.Visibility = Visibility.Visible;
-                PlaylistBox.SelectedIndex = 0;
-                _trackPath = trackpaths[0];
-                TrackLabel.Content = _trackPath;
             }
         }
 
@@ -310,9 +307,7 @@ namespace MediaPlayer
         private void SetSliderDefaults()
         {
             // assign defaults (from slider positions) when a track starts playing
-            MediaEle.SpeedRatio = SpeedSlider.Value;
             MediaEle.Volume = VolumeSlider.Value;
-            MediaEle.Balance = BalanceSlider.Value;
             MediaEle.Play();
             _timer.Start();
         }
